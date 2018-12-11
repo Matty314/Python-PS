@@ -1,4 +1,5 @@
 import csv
+import random
 
 def series_score(results, discard_number):
 	'''
@@ -37,4 +38,14 @@ with open('read_sailor_data.csv') as file:
 	reader = csv.reader(file)
 	x=[(row[0],(row[1],row[2])) for row in reader]
 	del x[0]
-	print(dict(x))
+	Sailor_data = dict(x)
+
+
+def generate_performances(Sailor_data):
+	"""
+	>>> random.seed(1)
+	>>> generate_performances({'Alice': ('100', '0'), 'Bob': ('100', '5'), 'Clare': ('100', '10'), 'Dennis': ('90', '0'), 'Eva': ('90', '5')})
+	{'Alice': 100.0, 'Bob': 99.92887277244607, 'Clare': 112.30907229116661, 'Dennis': 90.0, 'Eva': 88.31771536174679}
+	"""
+	return dict([(x, random.normalvariate( int(Sailor_data[x][0]), int( Sailor_data[x][1])))  for x in Sailor_data])
+
