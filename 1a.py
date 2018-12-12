@@ -43,9 +43,28 @@ with open('read_sailor_data.csv') as file:
 
 def generate_performances(Sailor_data):
 	"""
-	>>> random.seed(1)
+	>>> random.seed(57)
 	>>> generate_performances({'Alice': ('100', '0'), 'Bob': ('100', '5'), 'Clare': ('100', '10'), 'Dennis': ('90', '0'), 'Eva': ('90', '5')})
-	{'Alice': 100.0, 'Bob': 99.92887277244607, 'Clare': 112.30907229116661, 'Dennis': 90.0, 'Eva': 88.31771536174679}
+	{'Alice': 100.0, 'Bob': 105.76045089520113, 'Clare': 108.36452152548142, 'Dennis': 90.0, 'Eva': 96.10844089749128}
 	"""
 	return dict([(x, random.normalvariate( int(Sailor_data[x][0]), int( Sailor_data[x][1])))  for x in Sailor_data])
 
+def calculate_finishing_order(sailor_performances):
+	"""
+	>>> {'Alice': 100.0, 'Bob': 105.76045089520113, 'Clare': 108.36452152548142, 'Dennis': 90.0, 'Eva': 96.10844089749128}
+	['Clare', 'Bob', 'Alice', Eva', 'Dennis']
+	"""
+	sailor_performances = sorted( list(sailor_performances.items()) , key=lambda x:-x[1])
+	return [sailor_name[0] for sailor_name in sailor_performances]
+
+Final_Sailor_Results={"Alice": [], "Bob": [], "Clare": [], "Dennis": [], "Eva" : []}
+
+count=0
+while count < 6: 
+	a = calculate_finishing_order(generate_performances(Sailor_data))
+	for x in range(0,5):
+		Final_Sailor_Results[a[x]].append(int(x+1))
+	count+=1
+
+
+print(sort_series(list(Final_Sailor_Results.items())))
